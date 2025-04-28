@@ -57,7 +57,7 @@ def main():
             st.write(f"{letter} - {response['object']}")
             try:
                 img = Image.open(response['image'])  # Open the image
-                st.image(img, caption=response['object'], use_column_width=True)
+                st.image(img, caption=response['object'], use_container_width=True)
             except FileNotFoundError:
                 st.error(f"Image not found for {response['object']}")
         else:
