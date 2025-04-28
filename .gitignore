@@ -1,0 +1,21 @@
+# Ignore node_modules (for a Node.js project)
+node_modules/
+
+# Ignore Python bytecode files
+*.pyc
+
+# Ignore temporary files (e.g., logs, backups)
+*.log
+*.bak
+
+# Ignore build artifacts (e.g., compiled files)
+dist/
+build/
+
+# Ignore environment-specific files
+.env
+*.env
+
+# Ignore images folder content (but not the folder itself)
+images/*
+!images/.gitkeep
