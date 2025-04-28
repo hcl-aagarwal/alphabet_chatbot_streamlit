@@ -1,6 +1,7 @@
 import streamlit as st
+from PIL import Image  # Importing PIL to handle images
 
-# Define the dictionary mapping alphabet letters to objects
+# Define the dictionary mapping alphabet letters to objects and images
 alphabet_dict = {
     'A': {'object': 'Apple', 'image': 'images/apple.jpg'},
     'B': {'object': 'Ball', 'image': 'images/ball.jpg'},
@@ -30,13 +31,13 @@ alphabet_dict = {
     'Z': {'object': 'Zebra', 'image': 'images/zebra.jpg'}
 }
 
-# Function to get alphabet object
+# Function to get alphabet object and image path
 def get_alphabet_object(letter):
     letter = letter.upper()  # Ensure the letter is uppercase
     if letter in alphabet_dict:
-        return f"{letter} - {alphabet_dict[letter]}"
+        return alphabet_dict[letter]
     else:
-        return "Sorry, I don't recognize that letter. Please enter a valid letter."
+        return None
 
 # Streamlit UI components
 def main():
@@ -49,10 +50,18 @@ def main():
     # Create a text input field for the user to enter a letter
     letter = st.text_input("Enter an Alphabet Letter (A-Z):", "")
 
-    # If the user enters a letter, respond with the corresponding object
+    # If the user enters a letter, respond with the corresponding object and image
     if letter:
         response = get_alphabet_object(letter)
-        st.write(response)
+        if response:
+            st.write(f"{letter} - {response['object']}")
+            try:
+                img = Image.open(response['image'])  # Open the image
+                st.image(img, caption=response['object'], use_column_width=True)
+            except FileNotFoundError:
+                st.error(f"Image not found for {response['object']}")
+        else:
+            st.write("Sorry, I don't recognize that letter. Please enter a valid letter.")
 
     # Add a button to reset the input field (optional)
     if st.button("Clear"):
